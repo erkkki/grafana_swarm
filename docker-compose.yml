@@ -3,12 +3,15 @@ version: "3.8"
 networks:
   main_web:
     external: true
+  loki:
+    driver: overlay
 
 services:
   grafana:
     image: grafana/grafana:9.4.3
     networks:
       - main_web
+      - loki
     volumes:
       - grafana_data:/var/lib/grafana
     labels:
@@ -22,8 +25,12 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
+    networks:
+      - loki
   promtail:
     image: grafana/promtail:2.7.4
+    networks:
+      - loki
     volumes:
       - ./promtail-config.yaml:/etc/promtail/config.yml
       - /var/log:/var/log
