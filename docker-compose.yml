@@ -14,12 +14,14 @@ services:
       - "3100:3100"
     networks:
       - loki
+    volumes:
+      - ./volumes/loki:/loki
 
   promtail:
     image: grafana/promtail:2.7.4
     volumes:
-      - /var/log:/var/log
       - ./promtail-config.yaml:/etc/promtail/config.yml
+      - /var/log:/var/log
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers:/var/lib/docker/containers
     networks:
@@ -32,6 +34,10 @@ services:
     networks:
       - loki
       - main_web
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
+      - ./datasources:/etc/grafana/provisioning/datasources/
+#      - ./loki/grafana/provisioning/:/etc/grafana/provisioning/
     labels:
       - traefik.enable=true
       - traefik.http.routers.gra.rule=Host(`gra.erkheikki.fi`)

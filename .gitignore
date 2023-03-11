@@ -6,3 +6,5 @@
 /.idea/vcs.xml
 /.idea
 .idea
+/volumes/grafana/
+/volumes/loki/
