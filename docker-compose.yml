@@ -1,12 +1,23 @@
 version: "3"
 
 networks:
-  loki:
-    driver: overlay
   main_web:
     external: true
 
 services:
+  grafana:
+    image: grafana/grafana:9.4.3
+    networks:
+      - loki
+      - main_web
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.gra.rule=Host(`gra.erkheikki.fi`)
+      - traefik.http.routers.gra.tls=true
+      - traefik.http.routers.gra.tls.certresolver=lets-encrypt
+      - traefik.http.services.gra.loadbalancer.server.port=3000
 #  loki:
 #    image: grafana/loki:2.7.4
 #    command: -config.file=/etc/loki/local-config.yaml
@@ -25,19 +36,4 @@ services:
 #    networks:
 #      - loki
 
-  grafana:
-    image: grafana/grafana:9.4.3
-#    depends_on:
-#      - loki
-#      - promtail
-    networks:
-      - loki
-      - main_web
-#    volumes:
-#      - ./datasources:/etc/grafana/provisioning/datasources/
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.gra.rule=Host(`gra.erkheikki.fi`)
-      - traefik.http.routers.gra.tls=true
-      - traefik.http.routers.gra.tls.certresolver=lets-encrypt
-      - traefik.http.services.gra.loadbalancer.server.port=3000
+
