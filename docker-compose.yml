@@ -14,8 +14,9 @@ services:
       - "3100:3100"
     networks:
       - loki
-#    volumes:
-#      - ./volumes/loki:/loki
+    user: "0"
+    volumes:
+      - ./volumes/loki:/loki
 
   promtail:
     image: grafana/promtail:2.7.4
