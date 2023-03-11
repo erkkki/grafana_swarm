@@ -1,10 +1,10 @@
 version: "3"
 
 networks:
-#  loki:
+  loki:
 #    driver: overlay
   main_web:
-    external: true
+#    external: true
 
 services:
   loki:
@@ -12,11 +12,12 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     ports:
       - "3100:3100"
-#    networks:
-#      - loki
+    networks:
+      - loki
     user: "0"
     volumes:
       - ./volumes/loki:/loki
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
 
   promtail:
     image: grafana/promtail:2.7.4
@@ -25,21 +26,23 @@ services:
       - /var/log:/var/log
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers:/var/lib/docker/containers
-#    networks:
-#      - loki
+    networks:
+      - loki
 
   grafana:
     image: grafana/grafana:9.4.3
+    depends_on:
+      - loki
+      - promtail
     ports:
       - "3000:3000"
     user: "0"
     networks:
-#      - loki
+      - loki
       - main_web
     volumes:
       - ./volumes/grafana:/var/lib/grafana
       - ./datasources:/etc/grafana/provisioning/datasources/
-#      - ./loki/grafana/provisioning/:/etc/grafana/provisioning/
     labels:
       - traefik.enable=true
       - traefik.port=3000
