@@ -42,6 +42,7 @@ services:
 #      - ./loki/grafana/provisioning/:/etc/grafana/provisioning/
     labels:
       - traefik.enable=true
+      - traefik.port=3000
       - traefik.http.routers.gra.rule=Host(`gra.erkheikki.fi`)
       - traefik.http.routers.gra.tls=true
       - traefik.http.routers.gra.tls.certresolver=lets-encrypt
