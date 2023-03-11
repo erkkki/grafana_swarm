@@ -31,6 +31,7 @@ services:
     image: grafana/grafana:9.2.2
     ports:
       - "3000:3000"
+    user: '104'
     networks:
       - loki
       - main_web
