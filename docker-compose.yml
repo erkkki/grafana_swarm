@@ -42,7 +42,7 @@ services:
       - main_web
     volumes:
       - ./volumes/grafana:/var/lib/grafana
-      - ./datasources:/etc/grafana/provisioning/datasources/
+#      - ./datasources:/etc/grafana/provisioning/datasources/
     labels:
       - traefik.enable=true
       - traefik.port=3000
