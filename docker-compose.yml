@@ -15,7 +15,7 @@ services:
     networks:
       - loki
     volumes:
-      - ./volumes/loki:/loki
+      - ./volumes/loki:/loki:z
 
   promtail:
     image: grafana/promtail:2.7.4
@@ -35,7 +35,7 @@ services:
       - loki
       - main_web
     volumes:
-      - ./volumes/grafana:/var/lib/grafana
+      - ./volumes/grafana:/var/lib/grafana:z
       - ./datasources:/etc/grafana/provisioning/datasources/
 #      - ./loki/grafana/provisioning/:/etc/grafana/provisioning/
     labels:
