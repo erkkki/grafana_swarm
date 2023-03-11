@@ -2,9 +2,9 @@ version: "3"
 
 networks:
   loki:
-#    driver: overlay
+    driver: overlay
   main_web:
-#    external: true
+    external: true
 
 services:
   loki:
