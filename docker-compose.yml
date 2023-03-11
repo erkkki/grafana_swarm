@@ -17,26 +17,22 @@ services:
       - traefik.http.routers.gra.tls=true
       - traefik.http.routers.gra.tls.certresolver=lets-encrypt
       - traefik.http.services.gra.loadbalancer.server.port=3000
+  loki:
+    image: grafana/loki:2.7.4
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+  promtail:
+    image: grafana/promtail:2.7.4
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+      - /var/log:/var/log
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers
 
 volumes:
   grafana_data: {}
 
-#  loki:
-#    image: grafana/loki:2.7.4
-#    command: -config.file=/etc/loki/local-config.yaml
-#    networks:
-#      - loki
-#    volumes:
-#      - ./loki-config.yaml:/etc/loki/local-config.yaml
-#
-#  promtail:
-#    image: grafana/promtail:2.7.4
-#    volumes:
-#      - ./promtail-config.yaml:/etc/promtail/config.yml
-#      - /var/log:/var/log
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - /var/lib/docker/containers:/var/lib/docker/containers
-#    networks:
-#      - loki
+
 
 
