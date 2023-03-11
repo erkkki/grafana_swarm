@@ -1,8 +1,8 @@
 version: "3"
 
 networks:
-  loki:
-    driver: overlay
+#  loki:
+#    driver: overlay
   main_web:
     external: true
 
@@ -12,8 +12,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     ports:
       - "3100:3100"
-    networks:
-      - loki
+#    networks:
+#      - loki
     user: "0"
     volumes:
       - ./volumes/loki:/loki
@@ -25,8 +25,8 @@ services:
       - /var/log:/var/log
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers:/var/lib/docker/containers
-    networks:
-      - loki
+#    networks:
+#      - loki
 
   grafana:
     image: grafana/grafana:9.2.2
@@ -34,7 +34,7 @@ services:
       - "3000:3000"
     user: "0"
     networks:
-      - loki
+#      - loki
       - main_web
     volumes:
       - ./volumes/grafana:/var/lib/grafana
