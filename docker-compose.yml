@@ -14,8 +14,8 @@ services:
       - "3100:3100"
     networks:
       - loki
-    volumes:
-      - ./volumes/loki:/loki:z
+#    volumes:
+#      - ./volumes/loki:/loki
 
   promtail:
     image: grafana/promtail:2.7.4
@@ -35,7 +35,7 @@ services:
       - loki
       - main_web
     volumes:
-      - ./volumes/grafana:/var/lib/grafana:z
+      - ./volumes/grafana:/var/lib/grafana
       - ./datasources:/etc/grafana/provisioning/datasources/
 #      - ./loki/grafana/provisioning/:/etc/grafana/provisioning/
     labels:
