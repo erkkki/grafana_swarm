@@ -1,7 +1,7 @@
 test:
-        echo "Hello World"
+	echo "Hello World"
 up:
-        docker stack deploy --compose-file docker-compose.yml gra
+	docker stack deploy --compose-file docker-compose.yml gra
 down:
-        docker stack rm gra
+	docker stack rm gra
 
