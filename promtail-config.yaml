@@ -26,3 +26,18 @@ scrape_configs:
       - source_labels: ['__meta_docker_container_name']
         regex: '/(.*)'
         target_label: 'container'
+  - job_name: system
+    pipeline_stages:
+    static_configs:
+      - labels:
+          job: varlogs  # A `job` label is fairly standard in prometheus and useful for linking metrics and logs.
+          host: yourhost # A `host` label will help identify logs from this machine vs others
+          __path__: /var/log/*.log  # The path matching uses a third party library: https://github.com/bmatcuk/doublestar
+  - job_name: syslog
+    syslog:
+      listen_address: 0.0.0.0:1514
+      labels:
+        job: "syslog"
+    relabel_configs:
+      - source_labels: ['__syslog_message_hostname']
+        target_label: 'host'
