@@ -37,6 +37,10 @@ schema_config:
         prefix: index_
         period: 24h
 
+# Retention
+# https://grafana.com/docs/loki/latest/operations/storage/retention/:
+# If no global retention_period is specified, the default value of 744h (30days) retention is used.
+
 ruler:
   alertmanager_url: http://localhost:9093
 
